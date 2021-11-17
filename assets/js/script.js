@@ -1,14 +1,10 @@
 var cityChoiceEl = document.querySelector("#city");
 var cityFormEl = document.querySelector("#city-form");
-var currentWeatherContainer = document.querySelector("#current-weather")
-var d = new Date();
-var day = d.getDate();
-var m = new Date();
-var month = m.getMonth() + 1;
-var y = new Date();
-var year = y.getFullYear();
+var cityList = document.querySelector(".city-list");
+var currentWeatherContainer = document.querySelector("#current-weather");
+var forecastContainer = document.querySelector(".card-deck");
 var coord = [];
-
+var favCities = [];
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
@@ -17,10 +13,28 @@ var formSubmitHandler = function(event) {
 
     if(city) {
         findCity(city);
-        
+        addCityToFav(city);
+        clearChildren(currentWeatherContainer);
+        clearChildren(forecastContainer);
         cityChoiceEl.value = "";
     } else {
-        ("Please enter a city name");
+        alert("Please enter a city name");
+    }
+}
+
+var clearChildren = function(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+var addCityToFav = function(city) {
+    if (favCities.indexOf(city) === -1) {
+        favCities.push(city);
+        var cityButton = document.createElement("button");
+        cityButton.innerHTML = "<h2>" + city + "</h2>"
+        cityButton.classList = "btn"
+        cityList.appendChild(cityButton);
     }
 }
 
@@ -84,7 +98,7 @@ var displayForecast = function(coord) {
 var displayCurrentWeather = function(city) {
     console.log(city);
     var title = document.createElement("h1");
-    title.innerHTML = city.name + "(" + month + "/" + day + "/" + year + ")" + `<img src='http://openweathermap.org/img/wn/${city.weather[0].icon}@2x.png'>` ;
+    title.innerHTML = city.name + " " + moment(city.dt, "X").format("MM/DD/YYYY") + `<img src='http://openweathermap.org/img/wn/${city.weather[0].icon}@2x.png'>` ;
     currentWeatherContainer.appendChild(title);
 
     var temp = document.createElement("p");
