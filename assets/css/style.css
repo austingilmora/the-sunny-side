@@ -38,3 +38,37 @@
     font-size: 14px;
     font-weight: bolder;
 }
+
+.text-span-green{
+    background-color:rgba(17, 194, 53);
+    border-radius:25%;
+    height: 26px;
+    padding: 3px;
+    line-height: 26px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 6px;
+}
+
+.text-span-yellow{
+    background-color: rgb(213, 219, 20);
+    border-radius:25%;
+    height: 26px;
+    padding: 3px;
+    line-height: 26px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 6px;
+}
+
+.text-span-red{
+    background-color: rgb(240, 46, 12);
+    border-radius:25%;
+    height: 26px;
+    padding: 3px;
+    line-height: 26px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 6px;
+}
+

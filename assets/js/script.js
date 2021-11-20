@@ -143,7 +143,16 @@ var displayCurrentWeather = function(city) {
 
 var displayUV = function(city) {
     var UVindex = document.createElement("p");
-    UVindex.innerHTML = "UV index: " + city.current.uvi
+    if (city.current.uvi < 3) {
+        UVindex.innerHTML = "UV index: <span class='text-span-green'>" + city.current.uvi + "</span>"
+    }
+    
+    if (5 > city.current.uvi >= 3) {
+        UVindex.innerHTML = "UV index: <span class='text-span-yellow'>" + city.current.uvi + "</span>"
+    }
+    if (city.current.uvi >= 5) {
+        UVindex.innerHTML = "UV index: <span class='text-span-red'>" + city.current.uvi + "</span>"
+    }
     currentWeatherContainer.appendChild(UVindex);
 }
 
