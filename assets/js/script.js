@@ -3,6 +3,7 @@ var cityFormEl = document.querySelector("#city-form");
 var cityList = document.querySelector(".city-list");
 var currentWeatherContainer = document.querySelector("#current-weather");
 var forecastContainer = document.querySelector(".card-deck");
+var cityBtn = document.querySelectorAll(".cityBtn");
 var coord = [];
 var favCities = [];
 
@@ -16,9 +17,7 @@ var formSubmitHandler = function(event) {
         // get long and lat, and current weather
         findCity(city);
         
-        //clear old search
-        clearChildren(currentWeatherContainer);
-        clearChildren(forecastContainer);
+        
         // clear search container
         cityChoiceEl.value = "";
     } else {
@@ -43,13 +42,18 @@ var addCityToFav = function(city) {
         //make a button for the city
         var cityButton = document.createElement("button");
         cityButton.innerHTML = "<h2>" + city + "</h2>"
-        cityButton.classList = "btn"
+        cityButton.classList = "btn cityBtn"
         //add button to the city list
+        cityButton.addEventListener("click", function(event) {findCity(event.target.textContent)});
         cityList.appendChild(cityButton);
     }
-}
+};
 
 var findCity = function(city) {
+    
+    //clear old search
+    clearChildren(currentWeatherContainer);
+    clearChildren(forecastContainer);
     //format the api url
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=d7a0faeb8198c98603a340291c097390&units=imperial";
 
@@ -86,10 +90,10 @@ var displayForecast = function(coord) {
                 
                 // input UV index
                 displayUV(data);
-                console.log(data);
+                //console.log(data);
                 // for each day starting tomorrow, going for 5 days
                 for (let i = 1; i < data.daily.length - 2; i++) {
-                    console.log(data.daily[i]);
+                    //console.log(data.daily[i]);
                     document.querySelector(".card-deck").innerHTML += 
                     // add a card with date, weather icon, temp, wind speed, and humidity of the day
                     `<div class="card">
@@ -111,7 +115,7 @@ var displayForecast = function(coord) {
 };
 
 var displayCurrentWeather = function(city) {
-    console.log(city);
+    //console.log(city);
     // add city name and current date along with weather icon
     var title = document.createElement("h1");
     title.innerHTML = city.name + " " + moment(city.dt, "X").format("MM/DD/YYYY") + `<img src='http://openweathermap.org/img/wn/${city.weather[0].icon}@2x.png'>` ;
@@ -127,7 +131,7 @@ var displayCurrentWeather = function(city) {
     wind.innerHTML = "Wind Speed: " + city.wind.speed + " MPH";
     currentWeatherContainer.appendChild(wind);
 
-    //add add humidity
+    //add humidity
     var humidity = document.createElement("p");
     humidity.innerHTML = "Humidity: " + city.main.humidity + "%";
     currentWeatherContainer.appendChild(humidity);
@@ -154,15 +158,19 @@ var loadCities = function() {
     // if there are cities, make a new button for each
     else {
         favCities = JSON.parse(savedCities);
+        
         for (var i = 0; i < favCities.length; i++) {
+            
             var cityButton = document.createElement("button");
             cityButton.innerHTML = "<h2>" + favCities[i] + "</h2>"
-            cityButton.classList = "btn"
-
+            cityButton.classList = "btn cityBtn"
+            cityButton.addEventListener("click", function(event) {findCity(event.target.textContent)});
             cityList.appendChild(cityButton);
+            
         } 
     }
 }
 
 loadCities();
+
 cityFormEl.addEventListener("submit", formSubmitHandler);
