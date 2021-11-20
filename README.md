@@ -18,6 +18,7 @@
 * Allow you to click on past cities to see their weather report
 
 ## Screencapture of App:
+![weather-app-screencap](https://user-images.githubusercontent.com/90655310/142743521-719afd49-d23f-4b78-a4b2-b4934e79a229.png)
 
 
 ## The URL to my application is:
